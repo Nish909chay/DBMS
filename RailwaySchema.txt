@@ -1,0 +1,108 @@
+DDL
+
+-- Drop tables if they exist (clean slate)
+DROP TABLE IF EXISTS trainhalts;
+DROP TABLE IF EXISTS train;
+DROP TABLE IF EXISTS track;
+DROP TABLE IF EXISTS station;
+
+-- Table: station
+CREATE TABLE station (
+    stcode VARCHAR(5) PRIMARY KEY,
+    name VARCHAR(20)
+);
+
+-- Table: train
+CREATE TABLE train (
+    id VARCHAR(5) PRIMARY KEY,
+    name VARCHAR(20)
+);
+
+-- Table: track
+CREATE TABLE track (
+    stcode1 VARCHAR(5),
+    stcode2 VARCHAR(5),
+    distance INTEGER,
+    PRIMARY KEY (stcode1, stcode2)
+);
+
+-- Table: trainhalts
+CREATE TABLE trainhalts (
+    id VARCHAR(5),
+    seqno INTEGER,
+    stcode VARCHAR(10),
+    timein VARCHAR(5),
+    timeout VARCHAR(5),
+    PRIMARY KEY (id, seqno)
+);
+
+
+DML
+
+-- -------------------------
+-- Insert data into station
+-- -------------------------
+INSERT INTO station (stcode, name) VALUES
+  ('DL', 'DOMBIVALI'),
+  ('AMR', 'AMBARNATH'),
+  ('KYN', 'KALYAN'),
+  ('KSR', 'KASARA');
+
+-- -------------------------
+-- Insert data into train
+-- -------------------------
+INSERT INTO train (id, name) VALUES
+  ('KP11', 'CST-KYN'),
+  ('KP11L', 'CST-KYN_LOCAL'),
+  ('T129', 'CST-TNA_LOCAL'),
+  ('A63', 'CST-DL_LOCAL'),
+  ('K101', 'CST-KYN_LOCAL'),
+  ('N27', 'CST-TNA_LOCAL'),
+  ('S33', 'CST-KGR_LOCAL'),
+  ('A65', 'CST-AMR_LOCAL');
+
+-- -------------------------
+-- Insert data into track
+-- -------------------------
+INSERT INTO track (stcode1, stcode2, distance) VALUES
+  ('CST', 'BYC', 5),
+  ('CST', 'DR', 9),
+  ('CST', 'KRL', 16),
+  ('CST', 'GPR', 20),
+  ('CST', 'TNA', 34),
+  ('CST', 'DL', 49),
+  ('CST', 'KYN', 54),
+  ('CST', 'KSR', 77),
+  ('CST', 'AMR', 65),
+  ('BYC', 'DR', 4),
+  ('BYC', 'KRL', 11),
+  ('GPR', 'TNA', 14),
+  ('DR', 'TNA', 25),
+  ('KRL', 'KYN', 38),
+  ('TNA', 'KYN', 20),
+  ('TNA', 'KSR', 43);
+
+-- -------------------------
+-- Insert data into trainhalts
+-- -------------------------
+INSERT INTO trainhalts (id, seqno, stcode, timein, timeout) VALUES
+  -- KP11
+  ('KP11', 0, 'CST', NULL, '20.23'),
+  ('KP11', 1, 'BYC', '20.31', '20.32'),
+  ('KP11', 2, 'DR', '20.41', '20.42'),
+  ('KP11', 3, 'GPR', '20.52', '20.53'),
+  ('KP11', 4, 'GPR', '20.58', '20.59'),
+  ('KP11', 5, 'TNA', '21.21', '21.22'),
+  ('KP11', 6, 'DL', '21.45', '21.46'),
+  ('KP11', 7, 'KYN', '21.54', NULL),
+
+  -- A65
+  ('A65', 0, 'CST', NULL, '20.52'),
+  ('A65', 1, 'BYC', '21.00', '21.01'),
+  ('A65', 2, 'DR', '21.10', '21.11'),
+  ('A65', 3, 'KRL', '21.22', '21.23'),
+  ('A65', 4, 'GPR', '21.28', '21.29'),
+  ('A65', 5, 'TNA', '21.49', '21.50'),
+  ('A65', 6, 'DL', '22.13', '22.14'),
+  ('A65', 7, 'KYN', '22.22', '22.23'),
+  ('A65', 8, 'AMR', '22.36', NULL);
